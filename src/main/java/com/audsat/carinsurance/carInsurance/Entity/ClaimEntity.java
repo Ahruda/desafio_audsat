@@ -1,5 +1,6 @@
 package com.audsat.carinsurance.carInsurance.Entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,19 +9,25 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.Date;
+
 @Entity
-@Table(name = "customers")
-public class CustomerEntity {
+@Table(name = "claims")
+public class ClaimEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotNull
-    private String name;
+    @ManyToOne
+    private CarEntity car;
 
     @NotNull
     @ManyToOne
     private DriverEntity driver;
 
+    @NotNull
+    @Column(name = "event_date")
+    private Date eventDate;
 }
