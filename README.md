@@ -1,4 +1,4 @@
-# Desafio Aldsat - API para seguros 🌱🚀
+# Desafio Audsat - API para seguros 🌱🚀
 
 Neste README, vou explicar como você pode executá-la facilmente usando Docker.
 
