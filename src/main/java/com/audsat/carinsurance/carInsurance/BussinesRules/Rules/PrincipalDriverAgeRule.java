@@ -46,21 +46,6 @@ public class PrincipalDriverAgeRule extends AbstractInsuranceBudgetPercentageHan
         return super.handle(budgetDto);
     }
 
-    private Integer calcAgeold(Date birthDate, Instant dateReference) { //todo apagar aqui e ver excecao
-        Instant birthDateInstant = birthDate.toInstant();
-
-        if(isNull(dateReference)){
-            dateReference = Instant.now(); //Todo corrigir isso
-        }
-
-        Long instantAge = dateReference.getEpochSecond() - birthDateInstant.getEpochSecond() ;
-
-        if(instantAge > 0) {
-            return Math.toIntExact(instantAge / 31536000L); //Todo arrumar esse algoritmo, esta calculando errado
-        }
-        throw new RuntimeException(); //todo exceção de idade negativa
-    }
-
     private Integer calcAge(LocalDate birthDate, Instant instantReference) {
 
         LocalDate dateReference = LocalDate.ofInstant(instantReference, ZoneId.systemDefault());

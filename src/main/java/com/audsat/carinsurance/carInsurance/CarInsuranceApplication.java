@@ -9,5 +9,5 @@ public class CarInsuranceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CarInsuranceApplication.class, args);
 	}
-
+//TODO Verificar anotacao do mapper
 }

@@ -26,7 +26,7 @@ public class CarHasClaimsRule extends AbstractInsuranceBudgetPercentageHandle {
 
         List<ClaimEntity> claimsCarEntities = claimService.findByCarId(carId);
 
-        if(!claimsCarEntities.isEmpty()) { //todo testar caso venha null
+        if(!claimsCarEntities.isEmpty()) {
             budgetDto.increasePercentage(2);
             log.info("I=Enquadrado_na_regra_CarHasClaimsRule");
         }

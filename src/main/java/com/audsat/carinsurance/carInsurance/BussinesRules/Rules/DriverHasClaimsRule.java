@@ -26,7 +26,7 @@ public class DriverHasClaimsRule extends AbstractInsuranceBudgetPercentageHandle
 
         List<ClaimEntity> claimsDriverEntities = claimService.findByDriverId(driverId);
 
-        if(!claimsDriverEntities.isEmpty()) { //todo testar caso venha null
+        if(!claimsDriverEntities.isEmpty()) {
             budgetDto.increasePercentage(2);
             log.info("I=Enquadrado_na_regra_DriverHasClaimsRule");
         }
