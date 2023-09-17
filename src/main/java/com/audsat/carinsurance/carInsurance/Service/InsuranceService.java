@@ -6,6 +6,7 @@ import com.audsat.carinsurance.carInsurance.Entity.ClaimEntity;
 import com.audsat.carinsurance.carInsurance.Entity.CustomerEntity;
 import com.audsat.carinsurance.carInsurance.Entity.DriverEntity;
 import com.audsat.carinsurance.carInsurance.Entity.InsuranceEntity;
+import com.audsat.carinsurance.carInsurance.Exception.ForeignEntityNotFoundException;
 import com.audsat.carinsurance.carInsurance.Mapper.InsuranceMapper;
 import com.audsat.carinsurance.carInsurance.Repository.CarDriverRepository;
 import com.audsat.carinsurance.carInsurance.Repository.ClaimRepository;
@@ -13,6 +14,8 @@ import com.audsat.carinsurance.carInsurance.Repository.InsuranceRepository;
 import com.audsat.carinsurance.carInsurance.Request.InsuranceRequest;
 import com.audsat.carinsurance.carInsurance.Response.BudgetResponse;
 import com.audsat.carinsurance.carInsurance.Response.InsuranceResponse;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +43,6 @@ public class InsuranceService {
         InsuranceEntity entity = insuranceRepository.getReferenceById(id);
 
         log.info("I=Retorno_do_banco c=InsuranceService m=findInsuranceById, InsuranceEntity={}", entity);
-         //todo regras de negocio nesse ponto
 
         BudgetResponse budget = budgetService.calculateInsurance(entity);
 
@@ -50,52 +52,61 @@ public class InsuranceService {
     @Transactional
     public InsuranceResponse createInsurance(InsuranceRequest insuranceRequest) {
 
-        log.info("I=Requisitando_customer_car c=InsuranceService m=createInsurance, " +
-                "InsuranceRequest={}", insuranceRequest);
+        try {
 
-        CustomerEntity customer = customerService.getCustomerById(insuranceRequest.getCustomerId());
+            log.info("I=Requisitando_customer_car c=InsuranceService m=createInsurance, " +
+                    "InsuranceRequest={}", insuranceRequest);
 
-        CarEntity car = carService.getCarById(insuranceRequest.getCarId());
+            CustomerEntity customer = customerService.getCustomerById(insuranceRequest.getCustomerId());
 
-        log.info("I=Resposta_service c=InsuranceService m=createInsurance, " +
-                "CustomerEntity={} CarEntity={}", customer, car);
+            CarEntity car = carService.getCarById(insuranceRequest.getCarId());
 
-        InsuranceEntity entity = insuranceMapper.toEntity(insuranceRequest, customer, car);
+            log.info("I=Resposta_service c=InsuranceService m=createInsurance, " +
+                    "CustomerEntity={} CarEntity={}", customer, car);
 
-        log.info("I=Retorno_mapper c=InsuranceService m=createInsurance, InsuranceEntity={}", entity);
+            InsuranceEntity entity = insuranceMapper.toEntity(insuranceRequest, customer, car);
 
-        entity = insuranceRepository.save(entity);
+            log.info("I=Retorno_mapper c=InsuranceService m=createInsurance, InsuranceEntity={}", entity);
 
-        log.info("I=Insurance_cadastrado_com_sucesso c=InsuranceService m=createInsurance, InsuranceEntity={} ", entity);
+            entity = insuranceRepository.save(entity);
 
-        BudgetResponse budget = budgetService.calculateInsurance(entity);
+            log.info("I=Insurance_cadastrado_com_sucesso c=InsuranceService m=createInsurance, InsuranceEntity={} ", entity);
 
-        //todo regras de negocio nesse ponto
-        return insuranceMapper.toResponse(entity, budget);
+            BudgetResponse budget = budgetService.calculateInsurance(entity);
+
+            return insuranceMapper.toResponse(entity, budget);
+
+        } catch (EntityNotFoundException exception) {
+            throw new ForeignEntityNotFoundException(exception.getLocalizedMessage());
+        }
 
     }
 
     @Transactional
     public InsuranceResponse updateInsurance(Long id, InsuranceRequest insuranceRequest) {
 
-        log.info("I=Requisitando_entity_customer_car c=InsuranceService m=updateInsurance, " +
-                "InsuranceRequest={}", insuranceRequest);
+        try {
+            log.info("I=Requisitando_entity_customer_car c=InsuranceService m=updateInsurance, " +
+                    "InsuranceRequest={}", insuranceRequest);
 
-        InsuranceEntity entity = insuranceRepository.getReferenceById(id);
-        CustomerEntity customer = customerService.getCustomerById(insuranceRequest.getCustomerId());
-        CarEntity car = carService.getCarById(insuranceRequest.getCarId());
+            InsuranceEntity entity = insuranceRepository.getReferenceById(id);
+            CustomerEntity customer = customerService.getCustomerById(insuranceRequest.getCustomerId());
+            CarEntity car = carService.getCarById(insuranceRequest.getCarId());
 
-        log.info("I=Resposta_service c=InsuranceService m=updateInsurance, " +
-                "InsuranceEntity={} CustomerEntity={} CarEntity={}", entity, customer, car);
+            log.info("I=Resposta_service c=InsuranceService m=updateInsurance, " +
+                    "InsuranceEntity={} CustomerEntity={} CarEntity={}", entity, customer, car);
 
-        insuranceMapper.toUpdateEntity(insuranceRequest, customer, car, entity);
+            insuranceMapper.toUpdateEntity(insuranceRequest, customer, car, entity);
 
-        log.info("I=Entidade_atualizada c=InsuranceService m=updateInsurance, InsuranceEntity={} ", entity);
+            log.info("I=Entidade_atualizada c=InsuranceService m=updateInsurance, InsuranceEntity={} ", entity);
 
-        BudgetResponse budget = budgetService.calculateInsurance(entity);
+            BudgetResponse budget = budgetService.calculateInsurance(entity);
 
-        return insuranceMapper.toResponse(entity, budget);
+            return insuranceMapper.toResponse(entity, budget);
 
+        } catch (EntityNotFoundException exception) {
+            throw new ForeignEntityNotFoundException(exception.getLocalizedMessage());
+        }
     }
 
     @Transactional

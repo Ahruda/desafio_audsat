@@ -29,10 +29,8 @@ public class DriverHasClaimsRuleTest {
 
     @InjectMocks
     private DriverHasClaimsRule driverHasClaimsRule;
-
     @Mock
     private ClaimService claimService;
-
     private InsuranceEntity insuranceEntity;
 
     @BeforeEach

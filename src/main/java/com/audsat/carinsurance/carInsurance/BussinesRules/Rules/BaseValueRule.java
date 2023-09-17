@@ -9,14 +9,16 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @RequiredArgsConstructor
-@Builder
-@Component
 public class BaseValueRule extends AbstractInsuranceBudgetPercentageHandle {
 
     @Override
     public BudgetDto handle(BudgetDto budgetDto) {
 
+        log.info("I=Iniciando_verificacao_da_regra_BaseValueRule");
+
         budgetDto.setPercentage(6);
+
+        log.info("I=Enquadrado_na_regra_BaseValueRule");
 
         return super.handle(budgetDto);
     }

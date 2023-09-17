@@ -14,17 +14,16 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-
 public class BudgetService {
-
 
     private final BaseValueRule baseValueRule;
     private final PrincipalDriverAgeRule principalDriverAgeRule;
     private final DriverHasClaimsRule DriverHasClaimsRule;
     private final CarHasClaimsRule CarHasClaimsRule;
 
-
     public BudgetResponse calculateInsurance(InsuranceEntity insuranceEntity) {
+
+        log.info("I=Iniciando_calculo_do_orcamento InsuranceEntity={}", insuranceEntity);
 
         baseValueRule
                 .setNextRule(principalDriverAgeRule)
@@ -46,6 +45,8 @@ public class BudgetService {
         Float carFipeValue = budgetDto.getInsuranceEntity().getCar().getFipeValue();
 
         Float valueInsurance = (carFipeValue * budgetDto.getPercentage()) / 100;
+
+        log.info("I=Valor_do_orcamento_calculado Percentage={} ValueInsurance={}", budgetDto.getPercentage(), valueInsurance);
 
         return BudgetResponse.builder()
                 .percentage(budgetDto.getPercentage())

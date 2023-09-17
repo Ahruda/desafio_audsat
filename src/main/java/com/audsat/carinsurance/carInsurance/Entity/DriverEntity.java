@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 @Data
 @Builder
@@ -28,6 +29,6 @@ public class DriverEntity {
     private String document;
 
     @NotNull
-    private Date birthdate;
+    private LocalDate birthdate;
 
 }

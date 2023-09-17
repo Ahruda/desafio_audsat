@@ -20,12 +20,15 @@ public class DriverHasClaimsRule extends AbstractInsuranceBudgetPercentageHandle
     @Override
     public BudgetDto handle(BudgetDto budgetDto) {
 
+        log.info("I=Iniciando_verificacao_da_regra_DriverHasClaimsRule");
+
         Long driverId = budgetDto.getInsuranceEntity().getCustomer().getDriver().getId();
 
         List<ClaimEntity> claimsDriverEntities = claimService.findByDriverId(driverId);
 
         if(!claimsDriverEntities.isEmpty()) { //todo testar caso venha null
             budgetDto.increasePercentage(2);
+            log.info("I=Enquadrado_na_regra_DriverHasClaimsRule");
         }
 
         return super.handle(budgetDto);

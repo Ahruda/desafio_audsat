@@ -33,12 +33,9 @@ public class CarHasClaimsRuleTest {
 
     @InjectMocks
     private CarHasClaimsRule carHasClaimsRule;
-
     @Mock
     private ClaimService claimService;
-
     private InsuranceEntity insuranceEntity;
-
     @BeforeEach
     public void buildInsurance() {
 
