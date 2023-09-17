@@ -1,7 +1,6 @@
 package com.audsat.carinsurance.carInsurance.unit.rules;
 
 
-import com.audsat.carinsurance.carInsurance.BussinesRules.Rules.BaseValueRule;
 import com.audsat.carinsurance.carInsurance.BussinesRules.Rules.CarHasClaimsRule;
 import com.audsat.carinsurance.carInsurance.Dto.BudgetDto;
 import com.audsat.carinsurance.carInsurance.Entity.CarEntity;
@@ -10,12 +9,10 @@ import com.audsat.carinsurance.carInsurance.Entity.CustomerEntity;
 import com.audsat.carinsurance.carInsurance.Entity.DriverEntity;
 import com.audsat.carinsurance.carInsurance.Entity.InsuranceEntity;
 import com.audsat.carinsurance.carInsurance.Service.ClaimService;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -25,7 +22,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 
 @ExtendWith(MockitoExtension.class)

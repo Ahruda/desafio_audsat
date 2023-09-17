@@ -1,27 +1,19 @@
 package com.audsat.carinsurance.carInsurance.Service;
 
-import com.audsat.carinsurance.carInsurance.Entity.CarDriverEntity;
 import com.audsat.carinsurance.carInsurance.Entity.CarEntity;
-import com.audsat.carinsurance.carInsurance.Entity.ClaimEntity;
 import com.audsat.carinsurance.carInsurance.Entity.CustomerEntity;
-import com.audsat.carinsurance.carInsurance.Entity.DriverEntity;
 import com.audsat.carinsurance.carInsurance.Entity.InsuranceEntity;
 import com.audsat.carinsurance.carInsurance.Exception.ForeignEntityNotFoundException;
 import com.audsat.carinsurance.carInsurance.Mapper.InsuranceMapper;
-import com.audsat.carinsurance.carInsurance.Repository.CarDriverRepository;
-import com.audsat.carinsurance.carInsurance.Repository.ClaimRepository;
 import com.audsat.carinsurance.carInsurance.Repository.InsuranceRepository;
 import com.audsat.carinsurance.carInsurance.Request.InsuranceRequest;
 import com.audsat.carinsurance.carInsurance.Response.BudgetResponse;
 import com.audsat.carinsurance.carInsurance.Response.InsuranceResponse;
-import jakarta.persistence.Entity;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Slf4j
 @Service
@@ -50,7 +42,7 @@ public class InsuranceService {
     }
 
     @Transactional
-    public InsuranceResponse createInsurance(InsuranceRequest insuranceRequest) {
+    public Long createInsurance(InsuranceRequest insuranceRequest) {
 
         try {
 
@@ -72,9 +64,7 @@ public class InsuranceService {
 
             log.info("I=Insurance_cadastrado_com_sucesso c=InsuranceService m=createInsurance, InsuranceEntity={} ", entity);
 
-            BudgetResponse budget = budgetService.calculateInsurance(entity);
-
-            return insuranceMapper.toResponse(entity, budget);
+            return entity.getId();
 
         } catch (EntityNotFoundException exception) {
             throw new ForeignEntityNotFoundException(exception.getLocalizedMessage());
@@ -83,7 +73,7 @@ public class InsuranceService {
     }
 
     @Transactional
-    public InsuranceResponse updateInsurance(Long id, InsuranceRequest insuranceRequest) {
+    public Long updateInsurance(Long id, InsuranceRequest insuranceRequest) {
 
         try {
             log.info("I=Requisitando_entity_customer_car c=InsuranceService m=updateInsurance, " +
@@ -100,9 +90,7 @@ public class InsuranceService {
 
             log.info("I=Entidade_atualizada c=InsuranceService m=updateInsurance, InsuranceEntity={} ", entity);
 
-            BudgetResponse budget = budgetService.calculateInsurance(entity);
-
-            return insuranceMapper.toResponse(entity, budget);
+            return entity.getId();
 
         } catch (EntityNotFoundException exception) {
             throw new ForeignEntityNotFoundException(exception.getLocalizedMessage());

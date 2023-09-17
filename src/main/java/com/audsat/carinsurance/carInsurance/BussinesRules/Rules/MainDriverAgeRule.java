@@ -12,22 +12,20 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
-import java.util.Calendar;
-import java.util.Date;
 
 import static java.util.Objects.isNull;
 
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class PrincipalDriverAgeRule extends AbstractInsuranceBudgetPercentageHandle {
+public class MainDriverAgeRule extends AbstractInsuranceBudgetPercentageHandle {
 
     private final CarDriverService carDriverService;
 
     @Override
     public BudgetDto handle(BudgetDto budgetDto) {
 
-        log.info("I=Iniciando_verificacao_da_regra_PrincipalDriverAgeRule");
+        log.info("I=Iniciando_verificacao_da_regra_MainDriverAgeRule");
 
         Long carId = budgetDto.getInsuranceEntity().getCar().getId();
 
@@ -36,11 +34,15 @@ public class PrincipalDriverAgeRule extends AbstractInsuranceBudgetPercentageHan
         LocalDate birthdate = mainCarDriver.getDriver().getBirthdate();
         Instant dateReference = budgetDto.getInsuranceEntity().getCreationDt();
 
+        if(isNull(dateReference)) {
+            dateReference = Instant.now();
+        }
+
         int age = calcAge(birthdate, dateReference);
 
         if(age >= 18 && age < 26) {
             budgetDto.increasePercentage(2);
-            log.info("I=Enquadrado_na_regra_PrincipalDriverAgeRule");
+            log.info("I=Enquadrado_na_regra_MainDriverAgeRule");
         }
 
         return super.handle(budgetDto);

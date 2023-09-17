@@ -47,12 +47,14 @@ public class InsuranceController {
 
         log.info("I=Requisicao_recebida c=InsuranceController m=createInsurance, insuranceRequest={}", insuranceRequest);
 
-        InsuranceResponse entity = insuranceService.createInsurance(insuranceRequest);
+        Long entityId = insuranceService.createInsurance(insuranceRequest);
+
+        //Captura entidade atualizada depois que a transação foi comitada no banco
+        InsuranceResponse entity = insuranceService.findInsuranceById(entityId);
 
         URI uri = uriBuilder.path("insurance/budget/{id}").buildAndExpand(entity.getId()).toUri();
 
         log.info("I=Requisicao_concluida c=InsuranceController m=createInsurance, insuranceRequest={}", entity);
-
 
         return ResponseEntity.created(uri).body(entity);
 
@@ -60,14 +62,15 @@ public class InsuranceController {
 
     @PutMapping("/{id}")
     public ResponseEntity<InsuranceResponse> updateInsurance(@PathVariable @NotNull Long id,
-                                                             @RequestBody @Valid InsuranceRequest insuranceRequest,
-                                                             UriComponentsBuilder uriBuilder) {
+                                                             @RequestBody @Valid InsuranceRequest insuranceRequest) {
 
-        InsuranceResponse entity = insuranceService.updateInsurance(id, insuranceRequest);
+        Long entityId = insuranceService.updateInsurance(id, insuranceRequest);
 
-        log.info("I=controller: {} ", entity);
+        //Captura entidade atualizada depois que a transação foi comitada no banco
+        InsuranceResponse entity = insuranceService.findInsuranceById(entityId);
 
-        URI uri = uriBuilder.path("insurance/budget/{id}").buildAndExpand(entity.getId()).toUri();
+        log.info("I=Requisicao_concluida c=InsuranceController m=updateInsurance, insuranceRequest={}", entity);
+
         return ResponseEntity.ok(entity);
 
     }

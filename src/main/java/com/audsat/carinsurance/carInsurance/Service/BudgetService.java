@@ -3,7 +3,7 @@ package com.audsat.carinsurance.carInsurance.Service;
 import com.audsat.carinsurance.carInsurance.BussinesRules.Rules.BaseValueRule;
 import com.audsat.carinsurance.carInsurance.BussinesRules.Rules.CarHasClaimsRule;
 import com.audsat.carinsurance.carInsurance.BussinesRules.Rules.DriverHasClaimsRule;
-import com.audsat.carinsurance.carInsurance.BussinesRules.Rules.PrincipalDriverAgeRule;
+import com.audsat.carinsurance.carInsurance.BussinesRules.Rules.MainDriverAgeRule;
 import com.audsat.carinsurance.carInsurance.Dto.BudgetDto;
 import com.audsat.carinsurance.carInsurance.Entity.InsuranceEntity;
 import com.audsat.carinsurance.carInsurance.Response.BudgetResponse;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class BudgetService {
 
     private final BaseValueRule baseValueRule;
-    private final PrincipalDriverAgeRule principalDriverAgeRule;
+    private final MainDriverAgeRule mainDriverAgeRule;
     private final DriverHasClaimsRule DriverHasClaimsRule;
     private final CarHasClaimsRule CarHasClaimsRule;
 
@@ -26,7 +26,7 @@ public class BudgetService {
         log.info("I=Iniciando_calculo_do_orcamento InsuranceEntity={}", insuranceEntity);
 
         baseValueRule
-                .setNextRule(principalDriverAgeRule)
+                .setNextRule(mainDriverAgeRule)
                 .setNextRule(DriverHasClaimsRule)
                 .setNextRule(CarHasClaimsRule);
 

@@ -1,6 +1,5 @@
 package com.audsat.carinsurance.carInsurance.Repository;
 
-import com.audsat.carinsurance.carInsurance.Entity.CarDriverEntity;
 import com.audsat.carinsurance.carInsurance.Entity.ClaimEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 

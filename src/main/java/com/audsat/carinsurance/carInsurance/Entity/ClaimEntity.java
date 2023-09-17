@@ -9,7 +9,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "claims")
@@ -29,5 +29,5 @@ public class ClaimEntity {
 
     @NotNull
     @Column(name = "event_date")
-    private Date eventDate;
+    private LocalDateTime eventDate;
 }

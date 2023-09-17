@@ -1,11 +1,10 @@
 package com.audsat.carinsurance.carInsurance.unit.rules;
 
 
-import com.audsat.carinsurance.carInsurance.BussinesRules.Rules.PrincipalDriverAgeRule;
+import com.audsat.carinsurance.carInsurance.BussinesRules.Rules.MainDriverAgeRule;
 import com.audsat.carinsurance.carInsurance.Dto.BudgetDto;
 import com.audsat.carinsurance.carInsurance.Entity.CarDriverEntity;
 import com.audsat.carinsurance.carInsurance.Entity.CarEntity;
-import com.audsat.carinsurance.carInsurance.Entity.ClaimEntity;
 import com.audsat.carinsurance.carInsurance.Entity.CustomerEntity;
 import com.audsat.carinsurance.carInsurance.Entity.DriverEntity;
 import com.audsat.carinsurance.carInsurance.Entity.InsuranceEntity;
@@ -19,23 +18,16 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 
 @ExtendWith(MockitoExtension.class)
-public class PrincipalDriverAgeRuleTest {
+public class MainDriverAgeRuleTest {
 
     @InjectMocks
-    private PrincipalDriverAgeRule principalDriverAgeRule;
+    private MainDriverAgeRule mainDriverAgeRule;
     @Mock
     private CarDriverService carDriverService;
     private InsuranceEntity insuranceEntity;
@@ -85,7 +77,7 @@ public class PrincipalDriverAgeRuleTest {
 
         BudgetDto budgetDto = BudgetDto.builder().insuranceEntity(insuranceEntity).percentage(0).build();
 
-        principalDriverAgeRule.handle(budgetDto);
+        mainDriverAgeRule.handle(budgetDto);
 
         Assertions.assertEquals(2, budgetDto.getPercentage());
     }
@@ -111,7 +103,7 @@ public class PrincipalDriverAgeRuleTest {
 
         BudgetDto budgetDto = BudgetDto.builder().insuranceEntity(insuranceEntity).percentage(0).build();
 
-        principalDriverAgeRule.handle(budgetDto);
+        mainDriverAgeRule.handle(budgetDto);
 
         Assertions.assertEquals(0, budgetDto.getPercentage());
 

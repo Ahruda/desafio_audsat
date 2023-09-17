@@ -1,8 +1,6 @@
 package com.audsat.carinsurance.carInsurance.Service;
 
-import com.audsat.carinsurance.carInsurance.Entity.CarEntity;
 import com.audsat.carinsurance.carInsurance.Entity.ClaimEntity;
-import com.audsat.carinsurance.carInsurance.Repository.CarRepository;
 import com.audsat.carinsurance.carInsurance.Repository.ClaimRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
