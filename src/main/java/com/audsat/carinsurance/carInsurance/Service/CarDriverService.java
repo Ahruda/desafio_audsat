@@ -18,9 +18,4 @@ public class CarDriverService {
         return carDriverRepository.findByCarIdAndIsMainDriver(carId, Boolean.TRUE);
     }
 
-    public CarDriverEntity getCarDriverById(Long carDriverId) {
-
-       return carDriverRepository.getReferenceById(carDriverId);
-
-    }
 }

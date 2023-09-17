@@ -15,12 +15,6 @@ public class ClaimService {
 
     private final ClaimRepository claimRepository;
 
-    public ClaimEntity getClaimById(Long claimId) {
-
-       return claimRepository.getReferenceById(claimId);
-
-    }
-
     public List<ClaimEntity> findByDriverId(Long driverId) {
         return claimRepository.findByDriverId(driverId);
     }
