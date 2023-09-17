@@ -23,7 +23,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -32,13 +34,10 @@ import static org.mockito.ArgumentMatchers.anyLong;
 @ExtendWith(MockitoExtension.class)
 public class PrincipalDriverAgeRuleTest {
 
-
     @InjectMocks
     private PrincipalDriverAgeRule principalDriverAgeRule;
-
     @Mock
     private CarDriverService carDriverService;
-
     private InsuranceEntity insuranceEntity;
     private DriverEntity driver;
 
@@ -66,12 +65,16 @@ public class PrincipalDriverAgeRuleTest {
     }
 
     @Test
-    public void shouldIncrease2PercentageIfMainCarDriverHasDangerousAge() throws ParseException {
+    public void shouldIncrease2PercentageIfMainCarDriverHasDangerousAge() {
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, 2025);
+        c.set(Calendar.MONTH, Calendar.DECEMBER);
+        c.set(Calendar.DAY_OF_MONTH, 31);
 
-        driver.setBirthdate(dateFormat.parse("01/01/2000"));
-        insuranceEntity.setCreationDt(dateFormat.parse("31/12/2025").toInstant());
+        insuranceEntity.setCreationDt(c.toInstant());
+
+        driver.setBirthdate(LocalDate.of(2000, 1, 1));
 
         CarDriverEntity mainCarDriver = CarDriverEntity.builder()
                 .driver(driver)
@@ -88,12 +91,16 @@ public class PrincipalDriverAgeRuleTest {
     }
 
     @Test
-    public void shouldIncrease2PercentageIfMainCarDriverHasNoDangerousAge() throws ParseException {
+    public void shouldIncrease2PercentageIfMainCarDriverHasNoDangerousAge() {
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, 2026);
+        c.set(Calendar.MONTH, Calendar.JANUARY);
+        c.set(Calendar.DAY_OF_MONTH, 1);
 
-        driver.setBirthdate(dateFormat.parse("01/01/2000"));
-        insuranceEntity.setCreationDt(dateFormat.parse("01/01/2026").toInstant());
+        insuranceEntity.setCreationDt(c.toInstant());
+
+        driver.setBirthdate(LocalDate.of(2000, 1, 1));
 
         CarDriverEntity mainCarDriver = CarDriverEntity.builder()
                 .driver(driver)
