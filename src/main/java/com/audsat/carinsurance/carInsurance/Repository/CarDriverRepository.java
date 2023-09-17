@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CarDriverRepository extends JpaRepository<CarDriverEntity, Long> {
 
+    CarDriverEntity findByCarIdAndIsMainDriver(Long carId, Boolean aTrue);
 }
