@@ -1,6 +1,9 @@
 # Desafio Audsat - API para seguros 🌱🚀
 
-Neste README, vou explicar como você pode executá-la facilmente usando Docker.
+Desafio para vaga de desenvolvedor Java na Audsat.
+
+Nesse projeto utilizei como principal design pattern o [Chain of Responsibility](https://refactoring.guru/pt-br/design-patterns/chain-of-responsibility) 
+para a criação do motor das regras de negócio.
 
 ## Pré-requisitos
 
@@ -36,5 +39,8 @@ Siga os passos abaixo para executar a aplicação com Docker:
 Após a execução dos passos acima você pode acessar a API e a sua documentação pelo Swagger no endpoint:
 http://localhost:8080/swagger-ui/index.html
 
-## Diagrama da Aplicação
-.... Criando ....
+## Fluxo da Aplicação
+![](diagrama/diagrama.png)
+
+## Modelagem dos dados
+![](diagrama/banco.png)
